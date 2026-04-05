@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="RGB(27,62,166)">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Document</title>
+    <link rel="stylesheet" href="./../css/variables.css">
+    <link rel="stylesheet" href="./../css/common.css">
+    <link rel="stylesheet" href="./../css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./../js/lib/lottie.min.js"></script>
+    <script src="./../js/ui/common.js"></script>
+    <style>
+        .dummy, .footer {
+            transform: translateY(30px);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .dummy.slide-in { transition-delay: 0ms; }
+        .footer.slide-in { transition-delay: 150ms; }
+
+        .dummy.slide-in,
+        .footer.slide-in {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .dummy.slide-up,
+        .footer.slide-up {
+            transform: translateY(-30px);
+            opacity: 0;
+            transition-delay: 0ms;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-presentation">
+        <div class="wrap">
+            <div class="bg-wrap-light">
+                <!-- <div id="bg-prime"></div> -->
+                <div class="header">
+                    <div class="header-wrap">
+                        <div class="header-left">
+                            <div class="animates-star"></div>
+                        </div>
+                        <h1>우리금융캐피탈</h1>
+                        <div class="header-right">
+                            <button type="button" class="close-btn-prime"></button> 
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="dummy">
+                        <p>차를 고르기 전에 당신을 먼저 알아볼게요.<br>몇 가지 질문에 답해주세요.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            // 들어올 때
+            setTimeout(function(){
+                $('.dummy, .footer').addClass('slide-in');
+            }, 100);
+
+            // 나갈 때
+            setTimeout(function(){
+                $('.dummy, .footer').removeClass('slide-in').addClass('slide-up');
+                setTimeout(function(){
+                    window.location.href = './ai06.html';
+                }, 500);
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

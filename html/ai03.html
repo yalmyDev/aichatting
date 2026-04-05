@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="RGB(212,218,239)">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Document</title>
+    <link rel="stylesheet" href="./../css/variables.css">
+    <link rel="stylesheet" href="./../css/common.css">
+    <link rel="stylesheet" href="./../css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./../js/lib/lottie.min.js"></script>
+    <script src="./../js/ui/common.js"></script>
+    <style>
+        .chat-list > li:nth-child(-n + 3){opacity:0;transition:opacity 0.3s ease;}
+        .chat-list > li:nth-child(1){transition-delay: 500ms;}
+        .chat-list > li:nth-child(2){transition-delay: 800ms;}
+        .chat-list > li:nth-child(3){transition-delay: 1100ms;}
+        .chat-list > li.visible:nth-child(-n + 3){opacity:1;}
+    </style>
+</head>
+<body>
+    <div class="bg-presentation">
+        <div class="wrap">
+            <div class="bg-wrap-chat">
+                <!-- <div id="bg-prime"></div> -->
+                <div class="header">
+                    <div class="header-wrap">
+                        <div class="header-left">
+                            <div class="animates-star"></div>
+                            <h1 style="font:600 1.7rem/1.4 'Pretendard Variable';">우리와 대화중</h1>
+                        </div>
+                        <div class="header-right">
+                            <button type="button" class="close-btn-prime"></button> 
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="chat-wrap">
+                        <div class="chat-content">
+                            <div class="chat-date-wrap">
+                                <h2><span class="chat-year">2026</span>.<span class="chat-month">4</span>.<span class="chat-date">16</span></h2>
+                            </div>
+                            <ul class="chat-list">
+                                <li class="user-msg">
+                                    <div class="bubble">
+                                        <span>나에게 딱맞는 금융상품 추천</span>
+                                    </div>
+                                </li>
+                                <li class="ai-msg">
+                                    <div class="bubble">
+                                        <span>대출상품을 찾고있으시군요!<br>관심있는 상품을 선택하시면 상세한 상품을 찾아드릴게요.</span>
+                                    </div>
+                                </li>
+                                
+                                <li class="ai-msg prd-options">
+                                    <p><i class="icon-prd-list"></i>관심있는 상품을 선택해주세요.</p>
+                                    <ul class="info-list">
+                                        <li class="info-btn">
+                                            <div class="rd-wrap">
+                                                <input type="radio" name="prd1">
+                                                <span>개인 대출</span>
+                                            </div>
+                                        </li>
+                                        <li class="info-btn">
+                                            <div class="rd-wrap">
+                                                <input type="radio" name="prd1">
+                                                <span>자동차 대출</span>
+                                            </div>
+                                        </li>
+                                        <li class="info-btn">
+                                            <div class="rd-wrap">
+                                                <input type="radio" name="prd1">
+                                                <span>기업 대출</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="user-input-wrap">
+                            <input type="text" name="input01" placeholder="AI 에게 물어보세요.">
+                            <button type="button"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- <script>
+        lottie.loadAnimation({
+            container: document.getElementById('bg-prime'),
+            renderer:'svg',      // svg / canvas / html
+            loop: true,
+            autoplay:true,
+            path:'./../images/gif/bg_prime.json'  // 로컬 json 경로
+        });
+    </script> -->
+</body>
+</html>

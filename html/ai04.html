@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="RGB(27,62,166)">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Document</title>
+    <link rel="stylesheet" href="./../css/variables.css">
+    <link rel="stylesheet" href="./../css/common.css">
+    <link rel="stylesheet" href="./../css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./../js/lib/lottie.min.js"></script>
+    <script src="./../js/ui/common.js"></script>
+    <style>
+        .icon-wrap, .p01, .p02, .footer {
+            transform: translateY(30px);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .icon-wrap.slide-in { transition-delay: 0ms; }
+        .p01.slide-in { transition-delay: 200ms; }
+        .p02.slide-in { transition-delay: 400ms; }
+        .footer.slide-in { transition-delay: 600ms; }
+
+        .icon-wrap.slide-in,
+        .p01.slide-in,
+        .p02.slide-in,
+        .footer.slide-in {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-presentation">
+        <div class="wrap">
+            <div class="bg-wrap-light">
+                <!-- <div id="bg-prime"></div> -->
+                <div class="header">
+                    <div class="header-wrap">
+                        <div class="header-left">
+                            <div class="animates-star" id="animatesStar"></div>
+                        </div>
+                        <h1>우리금융캐피탈</h1>
+                        <div class="header-right">
+                            <button type="button" class="close-btn-prime"></button> 
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="icon-wrap">
+                        <i class="ai-bot"></i>
+                    </div>
+                    <div class="txt-container">
+                        <p class="p01">AI 맞춤형 운영리스 견적 서비스</p>
+                        <p class="p02">지금, 당신의 감성은 어디로 향해 있나요?<br>딱 맞는 차를 찾아볼까요?</p>
+                    </div>
+                </div>
+                <div class="footer prime">
+                    <a href="./ai05.html"><span>시작하기</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            setTimeout(function(){
+                $('.icon-wrap, .p01, .p02, .footer').addClass('slide-in');
+            }, 300);
+        });
+        lottie.loadAnimation({
+            container: document.getElementById('animatesStar'),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: './../images/gif/ai_star.json'
+        });
+    </script>
+</body>
+</html>
