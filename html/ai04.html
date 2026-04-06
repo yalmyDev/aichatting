@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="./../css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="./../js/lib/lottie.min.js"></script>
+    <script src="./../js/data/json_container.js"></script>
     <script src="./../js/ui/common.js"></script>
     <style>
         .icon-wrap, .p01, .p02, .footer {
@@ -52,7 +53,7 @@
                 </div>
                 <div class="content">
                     <div class="icon-wrap">
-                        <i class="ai-bot"></i>
+                        <i class="ai-bot"><img src="./../images/gif/ai_charactor.gif" alt="" style="width:160px;height:160px;"></i>
                     </div>
                     <div class="txt-container">
                         <p class="p01">AI 맞춤형 운영리스 견적 서비스</p>
@@ -70,13 +71,6 @@
             setTimeout(function(){
                 $('.icon-wrap, .p01, .p02, .footer').addClass('slide-in');
             }, 300);
-        });
-        lottie.loadAnimation({
-            container: document.getElementById('animatesStar'),
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-            path: './../images/gif/ai_star.json'
         });
     </script>
 </body>

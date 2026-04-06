@@ -5,6 +5,9 @@
 	font-style:normal;
 }
 *, *:before, *:after{box-sizing:border-box;}
+* {scrollbar-width: none; /* Firefox */-ms-overflow-style: none; /* IE */}
+
+*::-webkit-scrollbar {display: none; /* Chrome, Safari */}
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,

@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="./../css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="./../js/lib/lottie.min.js"></script>
+    <script src="./../js/data/json_container.js"></script>
     <script src="./../js/ui/common.js"></script>
     <style>
         .chat-list > li:nth-child(-n + 3){opacity:0;transition:opacity 0.3s ease;}
@@ -29,7 +30,7 @@
                 <div class="header">
                     <div class="header-wrap">
                         <div class="header-left">
-                            <div class="animates-star"></div>
+                            <div class="animates-star" id="animatesStar"></div>
                             <h1 style="font:600 1.7rem/1.4 'Pretendard Variable';">우리와 대화중</h1>
                         </div>
                         <div class="header-right">
