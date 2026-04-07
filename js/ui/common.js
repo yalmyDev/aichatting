@@ -1,3 +1,4 @@
+// 채팅 메세지 어펜드
 function appendAiMsg(html, delay) {
     return new Promise((resolve) => {
         setTimeout(() => {
@@ -23,7 +24,99 @@ function scrollToLastMsg() {
     $(".chat-wrap").animate({ scrollTop: scrollTarget }, 300);
 }
 
+// gsap 페이지 간 이동 애니메이션
+function onPageEnter(pageId) {
+    switch (pageId) {
+        case "chatMain":
+            initMainAnimation();
+            break;
+        case "carResearch01":
+        case "loanSearch01":
+            initChatAnimation(pageId);
+            break;
+    }
+}
+
+let currentPage = "chatMain";
+
+function goPage(targetId){
+    let $current = $('#' + currentPage);
+    let $target = $('#' + targetId);
+
+    if(targetId === "carResearch01" || targetId === "loanSearch01"){
+        let $chatList = $("#" + targetId + " .chat-list");
+        let count = parseInt($chatList.data("animate-count")) || 4;
+
+        $chatList.find("> li").slice(0, count).each(function(){
+            gsap.set(this, {opacity:0});
+        });
+    }
+    gsap.to($current,{
+        duration:0.4,
+        x:"-100%",
+        ease:"power2.inOut",
+        onComplete:function(){
+            gsap.set($current, {x:"100%"});
+        }
+    });
+    gsap.fromTo($target,
+        {x:"100%"},
+        {duration:0.4, x:"0%", ease:"power2Inout", onComplete:function(){onPageEnter(targetId);}}
+    );
+
+    currentPage = targetId;
+    // onPageEnter(targetId);
+}
+function onPageEnter(pageId){
+    switch(pageId){
+        case "chatMain":
+            initMainAnimation();
+            break;
+        case "carResearch01":
+        case "loanSearch01":
+            initChatAnimation(pageId);
+            break
+    }
+}
+function initMainAnimation() {
+    gsap.set(".step01, .step02", { height: 0, opacity: 0, overflow: "hidden" });
+    // gsap.set(".step03, .step04, .step05", { opacity: 0 });
+
+    let tl = gsap.timeline({ delay: 0.3 });
+
+    tl.to(".step01", { duration: 0.2, height: "auto", ease: "none" })
+        .to(".step01", { duration: 0.8, opacity: 1, ease: "none" })
+        .to(".step02", { duration: 0.2, height: "auto", ease: "none" }, "+=0.3")
+        .to(".step02", { duration: 0.8, opacity: 1, ease: "none" })
+        .to(".step03", { duration: 0.8, opacity: 1, ease: "none" }, "+=0.3")
+        .from(".step04",{ duration: 0.3, clipPath: "inset(0 0 100% 0)", ease: "none" },"+=0.3",)
+        .from(".step04", { duration: 0.8, opacity: 0, ease: "none" }, "<")
+        .from(".step05",{ duration: 0.3, clipPath: "inset(0 0 100% 0)", ease: "none" },"+=0.3",)
+        .from(".step05", { duration: 0.8, opacity: 0, ease: "none" }, "<");
+}
+function initChatAnimation(pageId) {
+    let $chatList = $("#" + pageId + " .chat-list");
+    let $items = $chatList.find("> li");
+    let durations = [0.3, 0.3, 0.6, 0.9, 1.2, 1.5];
+    let tl = gsap.timeline();
+
+    $items.each(function(index){
+        let $item = $(this);
+        let d = durations[index] || 0.8;
+        console.log("d :::" ,d);
+        let position = (index === 1) ? "+=1.0" : ">";
+
+        tl.to($item,{
+            duration:d,
+            opacity:1,
+            ease:'none'
+        }, position);
+    });
+}
+
 $(document).ready(function () {
+    gsap.set('.page:not(#chatMain)', {x:'100%'});
+    initMainAnimation();
     // what's scrolling
     // $('*').on('scroll', function(){
     //     console.log($(this).attr('class') || $(this).prop('tagName'));
@@ -45,6 +138,40 @@ $(document).ready(function () {
         "--footer-height",
         footerHeight + "px",
     );
+
+    // 화면전환 애니메이션
+    $(document).on("click", "a[href]", function (e) {
+        console.log("what?????");
+        let href = $(this).attr("href");
+
+        if (!href || href === "#" || href.startsWith("http")) return;
+
+        e.preventDefault();
+
+        let pageMap = {
+            "./ai02.html": "carResearch01",
+            "./ai03.html": "loanSearch01",
+            "./result01.html": "carResearch02",
+        };
+
+        let targetId = pageMap[href];
+        if (targetId) goPage(targetId);
+    });
+
+    // 채팅애니메이션
+    // if ($(".chat-list").length) {
+    //     let count = parseInt($(".chat-list").data("animate-count")) || 4;
+    //     let delays = [500, 800, 1100, 1400, 1700];
+
+    //     $(".chat-list > li")
+    //         .slice(0, count)
+    //         .each(function (index) {
+    //             $(this).css("transition-delay", delays[index] + "ms");
+    //             setTimeout(() => {
+    //                 $(this).addClass("visible");
+    //             }, delays[index]);
+    //         });
+    // }
 
     // 채팅 구현 스크립트
     $(document).on("click", ".ai-msg.has-choice-btn .option", function () {
@@ -272,25 +399,16 @@ $(document).ready(function () {
             .then(() => scrollToLastMsg());
     });
 
-    // 화면 이동 시 채팅 시작 애니메이션
-    let items = $(".chat-list > li");
-
-    items.each(function (index) {
-        let $item = $(this);
-
-        setTimeout(function () {
-            $item.addClass("visible");
-        }, index * 1000);
-    });
-
     // json 이미지 로딩
-    if ($("#animatesStar").length) {
-        lottie.loadAnimation({
-            container: document.getElementById("animatesStar"),
-            renderer: "svg",
-            loop: true,
-            autoplay: true,
-            animationData: aiStartJson,
+    if ($(".animates-star-lottie").length) {
+        $(".animates-star-lottie").each(function(){
+            lottie.loadAnimation({
+                container: this,
+                renderer: "svg",
+                loop: true,
+                autoplay: true,
+                animationData: aiStartJson,
+            });
         });
     }
 
