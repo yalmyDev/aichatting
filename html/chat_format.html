@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="RGB(27,62,166)">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>채팅창 디자인 리뉴얼 페이지</title>
+    <link rel="stylesheet" href="./../css/variables.css">
+    <link rel="stylesheet" href="./../css/common.css">
+    <link rel="stylesheet" href="./../css/style_v2.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./../js/lib/lottie.min.js"></script>
+    <script src="./../js/lib/gsap.min.js"></script>
+    <script src="./../js/data/json_container.js"></script>
+    <!-- <script src="./../js/ui/common_v2.js"></script> -->
+    <!-- <script src="./../js/ui/ai_chat_v2.js"></script> -->
+</head>
+<body>
+    <div class="bg-presentation">
+        <div class="wrap">
+            <!-- [start]차량찾기 -->
+            <div class="page bg-wrap-chat" id="chatPage">
+                <div class="lottie-bg"></div>
+                <div class="page-content">
+                    <div class="header">
+                        <div class="header-wrap">
+                            <div class="header-left">
+                                <div class="animates-star animates-star-lottie"></div>
+                                <h1 style="font:600 1.7rem/1.4 'Pretendard Variable';">우리와 대화중</h1>
+                            </div>
+                            <div class="header-right">
+                                <button type="button" class="close-btn-prime"></button> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="chat-wrap">
+                            <div class="chat-content">
+                                <div class="chat-date-wrap">
+                                    <h2>
+                                        <span class="chat-year"></span>.<span class="chat-month"></span>.<span class="chat-date"></span>
+                                    </h2>
+                                </div>
+                                <ul class="chat-list">
+                                    <li class="user-msg">
+                                        <div class="bubble"><span>나에게 꼭 맞는 차량은?</span></div>
+                                    </li>
+                                    <li class="ai-msg">
+                                        <div class="bubble"><span>좋아요! 5가지 질문에 답해주시면, 꼭 맞는 차량을 찾아 드릴께요!</span></div>
+                                    </li>
+                                    <li class="ai-msg">
+                                        <div class="bubble"><span>당신의 성향을 한마디로 표현한다면 어디에 가까운가요?</span></div>
+                                    </li>
+                                    <li class="ai-msg">
+                                        <p class="caution-msg">다음 중 하나만 선택해주세요</p>
+                                        <div class="b-wrap">
+                                            <ul class="b-list">
+                                                <li class="b-container">
+                                                    <input type="radio" class="persona" name="persona01">
+                                                    <div class="img-wrap">
+                                                        <img src="./../images/gif/personality/1.gif" alt="">
+                                                    </div>
+                                                    <div class="b-txt-wrap">
+                                                        <div class="b-tit">탐험가 DNA</div>
+                                                        <div class="b-txt">새로운 길을 개척하는게 내스타일!</div>
+                                                    </div>
+                                                </li>
+                                                <li class="b-container">
+                                                    <input type="radio" class="persona" name="persona01">
+                                                    <div class="img-wrap">
+                                                        <img src="./../images/gif/personality/2.gif" alt="">
+                                                    </div>
+                                                    <div class="b-txt-wrap">
+                                                        <div class="b-tit">감각주의자</div>
+                                                        <div class="b-txt">남들과 다른 무드를 원해요!</div>
+                                                    </div>
+                                                </li>
+                                                <li class="b-container">
+                                                    <input type="radio" class="persona" name="persona01">
+                                                    <div class="img-wrap">
+                                                        <img src="./../images/gif/personality/3.gif" alt="">
+                                                    </div>
+                                                    <div class="b-txt-wrap">
+                                                        <div class="b-tit">전략 설계자</div>
+                                                        <div class="b-txt">모든 선택엔 이유가 있어야죠.</div>
+                                                    </div>
+                                                </li>
+                                                <li class="b-container">
+                                                    <input type="radio" class="persona" name="persona01">
+                                                    <div class="img-wrap">
+                                                        <img src="./../images/gif/personality/4.gif" alt="">
+                                                    </div>
+                                                    <div class="b-txt-wrap">
+                                                        <div class="b-tit">에너지 드라이버</div>
+                                                        <div class="b-txt">속도감과 액션이 나를 움직여요.</div>
+                                                    </div>
+                                                </li>
+                                                <li data-none="none"></li>
+                                            </ul>
+                                        </div>
+                                        <div class="pagination">
+                                            <div class="page-index"></div>
+                                            <div class="page-index"></div>
+                                            <div class="page-index"></div>
+                                            <div class="page-index"></div>
+                                        </div>
+                                    </li>
+                                    <!-- ////////// -->
+                                    <li class="user-msg">
+                                        <div class="bubble"><span>탐험가 DNA</span></div>
+                                    </li>
+                                    <li class="ai-msg">
+                                        <div class="bubble"><span>당신의 일상은 어떤가요?</span></div>
+                                    </li>
+                                    <li class="ai-msg">
+                                        <p class="caution-msg">다음 중 하나만 선택해주세요</p>
+                                        <div class="b-wrap">
+                                            <ul class="b-list">
+                                                <li class="b-container">
+                                                    <input type="radio" class="persona" name="persona02">
+                                                    <div class="img-wrap">
+                                                        <img src="./../images/gif/personality/5.gif" alt="">
+                                                    </div>
+                                                    <div class="b-txt-wrap">
+                                                        <div class="b-tit">자연 속 주말러</div>
+                                                        <!-- <div class="b-txt">새로운 길을 개척하는게 내스타일!</div> -->
+                                                    </div>
+                                                </li>
+                                                <li class="b-container">
+                                                    <input type="radio" class="persona" name="persona02">
+                                                    <div class="img-wrap">
+                                                        <img src="./../images/gif/personality/6.gif" alt="">
+                                                    </div>
+                                                    <div class="b-txt-wrap">
+                                                        <div class="b-tit">도심트렌더</div>
+                                                        <!-- <div class="b-txt">남들과 다른 무드를 원해요!</div> -->
+                                                    </div>
+                                                </li>
+                                                <li class="b-container">
+                                                    <input type="radio" class="persona" name="persona02">
+                                                    <div class="img-wrap">
+                                                        <img src="./../images/gif/personality/7.gif" alt="">
+                                                    </div>
+                                                    <div class="b-txt-wrap">
+                                                        <div class="b-tit">근거리 루틴러</div>
+                                                        <!-- <div class="b-txt">모든 선택엔 이유가 있어야죠.</div> -->
+                                                    </div>
+                                                </li>
+                                                <li class="b-container">
+                                                    <input type="radio" class="persona" name="persona02">
+                                                    <div class="img-wrap">
+                                                        <img src="./../images/gif/personality/8.gif" alt="">
+                                                    </div>
+                                                    <div class="b-txt-wrap">
+                                                        <div class="b-tit">장거리 네비게이터</div>
+                                                        <!-- <div class="b-txt">속도감과 액션이 나를 움직여요.</div> -->
+                                                    </div>
+                                                </li>
+                                                <li data-none="none"></li>
+                                            </ul>
+                                        </div>
+                                        <div class="pagination">
+                                            <div class="page-index"></div>
+                                            <div class="page-index"></div>
+                                            <div class="page-index"></div>
+                                            <div class="page-index"></div>
+                                        </div>
+                                    </li>
+                                    <!-- ////////// -->
+                                    <li class="user-msg">
+                                        <div class="bubble"><span>자연 속 주말러</span></div>
+                                    </li>
+                                    <li class="ai-msg">
+                                        <div class="bubble"><span>오늘 기분은 어떤 색깔에 가까운가요?</span></div>
+                                    </li>
+                                    <li class="ai-msg">
+                                        <p class="caution-msg">다음 중 하나만 선택해주세요</p>
+                                        <div class="b-wrap">
+                                            <ul class="b-list">
+                                                <li class="b-container">
+                                                    <input type="radio" class="persona" name="persona03">
+                                                    <div class="img-wrap">
+                                                        <img src="./../images/gif/personality/11.gif" alt="">
+                                                    </div>
+                                                    <div class="b-txt-wrap">
+                                                        <div class="b-tit">그린 브리즈</div>
+                                                        <div class="b-txt">힐링되는 친환경차가 좋아요.</div>
+                                                    </div>
+                                                </li>
+                                                <li class="b-container">
+                                                    <input type="radio" class="persona" name="persona03">
+                                                    <div class="img-wrap">
+                                                        <img src="./../images/gif/personality/9.gif" alt="">
+                                                    </div>
+                                                    <div class="b-txt-wrap">
+                                                        <div class="b-tit">레드 스파크</div>
+                                                        <div class="b-txt">강렬한 스포티한 차가 끌려요.</div>
+                                                    </div>
+                                                </li>
+                                                <li class="b-container">
+                                                    <input type="radio" class="persona" name="persona03">
+                                                    <div class="img-wrap">
+                                                        <img src="./../images/gif/personality/10.gif" alt="">
+                                                    </div>
+                                                    <div class="b-txt-wrap">
+                                                        <div class="b-tit">블루 밸런스</div>
+                                                        <div class="b-txt">조용함과 편안함이 우선이예요.</div>
+                                                    </div>
+                                                </li>
+                                                <li class="b-container">
+                                                    <input type="radio" class="persona" name="persona03">
+                                                    <div class="img-wrap">
+                                                        <img src="./../images/gif/personality/12.gif" alt="">
+                                                    </div>
+                                                    <div class="b-txt-wrap">
+                                                        <div class="b-tit">옐로우 바이브</div>
+                                                        <div class="b-txt">밝고 긍정적인 에너지를 느끼고 싶어요.</div>
+                                                    </div>
+                                                </li>
+                                                <li data-none="none"></li>
+                                            </ul>
+                                        </div>
+                                        <div class="pagination">
+                                            <div class="page-index"></div>
+                                            <div class="page-index"></div>
+                                            <div class="page-index"></div>
+                                            <div class="page-index"></div>
+                                        </div>
+                                    </li>
+                                    <!-- ////////// -->
+                                    <li class="user-msg">
+                                        <div class="bubble"><span>블루밸런스</span></div>
+                                    </li>
+                                    <li class="ai-msg">
+                                        <div class="bubble"><span>미래에 당신의 차량이 어떤 역할을 해주길 바라나요?</span></div>
+                                    </li>
+                                    <li class="ai-msg">
+                                        <p class="caution-msg">다음 중 하나만 선택해주세요</p>
+                                        <div class="b-wrap">
+                                            <ul class="b-list">
+                                                <li class="b-container">
+                                                    <input type="radio" class="persona" name="persona04">
+                                                    <div class="img-wrap">
+                                                        <img src="./../images/gif/personality/13.gif" alt="">
+                                                    </div>
+                                                    <div class="b-txt-wrap">
+                                                        <div class="b-tit">내 손안의 비서</div>
+                                                        <!-- <div class="b-txt">힐링되는 친환경차가 좋아요.</div> -->
+                                                    </div>
+                                                </li>
+                                                <li class="b-container">
+                                                    <input type="radio" class="persona" name="persona04">
+                                                    <div class="img-wrap">
+                                                        <img src="./../images/gif/personality/14.gif" alt="">
+                                                    </div>
+                                                    <div class="b-txt-wrap">
+                                                        <div class="b-tit">즉각 반응 머신</div>
+                                                        <!-- <div class="b-txt">강렬한 스포티한 차가 끌려요.</div> -->
+                                                    </div>
+                                                </li>
+                                                <li class="b-container">
+                                                    <input type="radio" class="persona" name="persona04">
+                                                    <div class="img-wrap">
+                                                        <img src="./../images/gif/personality/15.gif" alt="">
+                                                    </div>
+                                                    <div class="b-txt-wrap">
+                                                        <div class="b-tit">든든한 보호자</div>
+                                                        <!-- <div class="b-txt">조용함과 편안함이 우선이예요.</div> -->
+                                                    </div>
+                                                </li>
+                                                <li class="b-container">
+                                                    <input type="radio" class="persona" name="persona04">
+                                                    <div class="img-wrap">
+                                                        <img src="./../images/gif/personality/16.gif" alt="">
+                                                    </div>
+                                                    <div class="b-txt-wrap">
+                                                        <div class="b-tit">가성비 마스터</div>
+                                                        <!-- <div class="b-txt">밝고 긍정적인 에너지를 느끼고 싶어요.</div> -->
+                                                    </div>
+                                                </li>
+                                                <li data-none="none"></li>
+                                            </ul>
+                                        </div>
+                                        <div class="pagination">
+                                            <div class="page-index"></div>
+                                            <div class="page-index"></div>
+                                            <div class="page-index"></div>
+                                            <div class="page-index"></div>
+                                        </div>
+                                    </li>
+                                    <!-- ////////// -->
+                                    <li class="user-msg">
+                                        <div class="bubble"><span>든든한 보호자</span></div>
+                                    </li>
+                                    <li class="ai-msg">
+                                        <div class="bubble"><span>이제 마지막 질문이예요! 당신에게 자동차는 어떤 의미 인가요?</span></div>
+                                    </li>
+                                    <li class="ai-msg">
+                                        <p class="caution-msg">다음 중 하나만 선택해주세요</p>
+                                        <div class="b-wrap">
+                                            <ul class="b-list">
+                                                <li class="b-container">
+                                                    <input type="radio" class="persona" name="persona05">
+                                                    <div class="img-wrap">
+                                                        <img src="./../images/gif/personality/17.gif" alt="">
+                                                    </div>
+                                                    <div class="b-txt-wrap">
+                                                        <div class="b-tit">가족의 안식처</div>
+                                                        <!-- <div class="b-txt">힐링되는 친환경차가 좋아요.</div> -->
+                                                    </div>
+                                                </li>
+                                                <li class="b-container">
+                                                    <input type="radio" class="persona" name="persona05">
+                                                    <div class="img-wrap">
+                                                        <img src="./../images/gif/personality/18.gif" alt="">
+                                                    </div>
+                                                    <div class="b-txt-wrap">
+                                                        <div class="b-tit">비즈니스 파트너</div>
+                                                        <!-- <div class="b-txt">강렬한 스포티한 차가 끌려요.</div> -->
+                                                    </div>
+                                                </li>
+                                                <li class="b-container">
+                                                    <input type="radio" class="persona" name="persona05">
+                                                    <div class="img-wrap">
+                                                        <img src="./../images/gif/personality/19.gif" alt="">
+                                                    </div>
+                                                    <div class="b-txt-wrap">
+                                                        <div class="b-tit">내 삶의 아이콘</div>
+                                                        <!-- <div class="b-txt">조용함과 편안함이 우선이예요.</div> -->
+                                                    </div>
+                                                </li>
+                                                <li class="b-container">
+                                                    <input type="radio" class="persona" name="persona05">
+                                                    <div class="img-wrap">
+                                                        <img src="./../images/gif/personality/20.gif" alt="">
+                                                    </div>
+                                                    <div class="b-txt-wrap">
+                                                        <div class="b-tit">실속 있는 자산</div>
+                                                        <!-- <div class="b-txt">밝고 긍정적인 에너지를 느끼고 싶어요.</div> -->
+                                                    </div>
+                                                </li>
+                                                <li data-none="none"></li>
+                                            </ul>
+                                        </div>
+                                        <div class="pagination">
+                                            <div class="page-index"></div>
+                                            <div class="page-index"></div>
+                                            <div class="page-index"></div>
+                                            <div class="page-index"></div>
+                                        </div>
+                                    </li>
+                                    <!-- ////////// -->
+                                    <li class="user-msg">
+                                        <div class="bubble"><span>가족의 안식처</span></div>
+                                    </li>
+                                    <li class="ai-msg">
+                                        <div class="bubble"><span>당신과 꼭 닮은 차량를 찾고 있어요, 잠시만요!</span></div>
+                                    </li>
+                                    <!-- ////////// -->
+                                    <li class="ai-msg has-prd-btn">
+                                        <ul class="prd-list">
+                                            <li class="prd-option">
+                                                <div class="prd-card">
+                                                    <img src="./../images/prd/palisade_v2.png" alt="">
+                                                    <div class="txt-wrap">
+                                                        <span class="txt1">준대형 SUV로 차박, 큰짐 운반에 최적</span>
+                                                        <span class="txt2">현대 팰리세이드</span>
+                                                        <span class="txt3">5,000만원</span>
+                                                    </div>
+                                                </div>
+                                                <button type="button"><span>차량 정보 확인</span></button>
+                                            </li>
+                                            <li class="prd-option">
+                                                <div class="prd-card">
+                                                    <img src="./../images/prd/sorento.png" alt="">
+                                                    <div class="txt-wrap">
+                                                        <span class="txt1">중형 SUV로 가족 캠핑에 적합</span>
+                                                        <span class="txt2">기아 쏘렌토</span>
+                                                        <span class="txt3">3,600만원</span>
+                                                    </div>
+                                                </div>
+                                                <button type="button"><span>차량 정보 확인</span></button>
+                                            </li>
+                                            <li class="prd-option">
+                                                <div class="prd-card">
+                                                    <img src="./../images/prd/teslamodel3.png" alt="">
+                                                    <div class="txt-wrap">
+                                                        <span class="txt1">흘륭한 가속력, 긴 주행 가능 거리</span>
+                                                        <span class="txt2">테슬라 model 3</span>
+                                                        <span class="txt3">5,000만원</span>
+                                                    </div>
+                                                </div>
+                                                <button type="button"><span>차량 정보 확인</span></button>
+                                            </li>
+                                        </ul>
+                                        <div class="pagination">
+                                            <div class="page-index"></div>
+                                            <div class="page-index"></div>
+                                            <div class="page-index"></div>
+                                        </div>
+                                    </li>
+                                    <li class="ai-msg">
+                                        <div class="bubble"><span>당신의 마음에 드는 차를 하나만 선택해보세요.</span></div>
+                                    </li>
+                                    <li class="ai-msg refresh-btn">
+                                        <button type="button">
+                                            <i class="ai-icon"></i>
+                                            <span>새로 추천받기</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="user-input-wrap">
+                                <div class="chat-input-wrap">
+                                    <input type="text" name="input01" placeholder="AI 에게 물어보세요.">
+                                    <button type="button"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [end]차량찾기 -->
+        </div>
+        <div class="full-modal" id="bridgePage">
+            <div class="modal-content">
+                <button type="button" class="close-modal"></button>
+                <div class="modal-prd">
+                    <div class="img-cont">
+                        <img src="./../images/prd/palisade_v2.png" alt="" class="modal-prd-img">
+                    </div>
+                    <div class="prd-txt-wrap">
+                        <p class="prd-txt01">현대 팰리세이드</p>
+                        <p class="prd-txt02">50,000,000원</p>
+                        <p class="prd-txt03">차분하면서도 든든한 탐험!<br>안전이 최우선 팰리세이드가 가족과 함께한 자연 속 여정을 완성합니다.</p>
+                    </div>
+                    <ul class="tag-wrap">
+                        <li class="tag"><span>전기SUV</span></li>
+                        <li class="tag"><span>가족</span></li>
+                        <li class="tag"><span>안전</span></li>
+                    </ul>
+                    <button type="button" class="to-gyeonjuk"><span>슬쩍 견적보기</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

@@ -6,16 +6,17 @@
     <meta name="theme-color" content="RGB(27,62,166)">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Document</title>
+    <title>메인앱 진입 수정페이지</title>
     <link rel="stylesheet" href="./../css/variables.css">
     <link rel="stylesheet" href="./../css/common.css">
-    <link rel="stylesheet" href="./../css/style.css">
+    <!-- <link rel="stylesheet" href="./../css/style.css"> -->
+    <link rel="stylesheet" href="./../css/style_v2.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="./../js/lib/lottie.min.js"></script>
     <script src="./../js/lib/gsap.min.js"></script>
     <script src="./../js/data/json_container.js"></script>
-    <script src="./../js/ui/common.js"></script>
-    <script src="./../js/ui/ai_chat.js"></script>
+    <script src="./../js/ui/ai_chat_v2.js"></script>
+    <script src="./../js/ui/common_v2.js"></script>
 </head>
 <body>
     <div class="bg-presentation">
@@ -50,7 +51,6 @@
                         <div class="icon-wrap">
                             <i class="ai-bot"><img src="./../images/gif/ai_charactor.gif" alt="" style="width:100px;height:100px;"></i>
                         </div>
-                        <p class="desc step03" style="padding:8px 0;font:300 1.5rem/21px 'Pretendard Variable';">지금 바로 확인하고 싶은 키워드를 골라주시면 상세히 안내해 드릴게요.</p>
                         <ul class="ai-menu-list">
                             <li class="btn-full step04">
                                 <a href="./ai02.html" data-scenario="carResearch">
@@ -116,26 +116,53 @@
                         </div>
                     </div>
                 </div>
-                <div class="content">
-                    <div style="display:block;width:100%;height:40px;"></div>
-                    <p style="font:700 1.6rem/1.4 'Pretendard Variable';color:rgba(7, 15, 22, 0.82);text-align:center;">당신의 감성과 라이프스타일에<br>적합한 차량을 찾았어요!</p>
-                    <div style="display:block;width:100%;height:24px;"></div>
-                    <div class="prd-list-wrap">
-                        <div class="prd-img"><img src="" alt="" style="display:none;"></div>
+                <div class="content gyeonjuk-page">
+                    <div class="top-txt-wrap">
+                        <p>AI기반 차량 견적 생성이 완료되었어요!</p>
+                        <p class="get-car-info">준대형 SUV로 차박, 큰짐 운반에 최적화된<br>현대 팰리세이드와 함께하세요.</p>
                     </div>
-                    <div class="desc-txt-wrap">
-                        <div class="desc-wrap">
-                            <p class="desc01"></p>
-                            <p class="desc02"></p>
-                            <p class="desc03"><br></p>
+                    <div class="midle-info-wrap">
+                        <div class="first-top">
+                            <div class="top">
+                                <div class="left">
+                                    <div class="txt01">현대 팰리세이드</div>
+                                    <div class="txt02">월 658,938원</div>
+                                </div>
+                                <div class="right">
+                                    <img src="./../images/prd/palisade_v2.png" alt="">
+                                </div>
+                            </div>
+                            <div class="bottom">
+                                <div class="btm-txt01">취향이 같은 분들이 가장 많이 찾은 플랜이에요</div>
+                            </div>
                         </div>
-                    </div>
-                    <div style="display:block;width:100%;height:32px;"></div>
-                    <div class="a-btn-wrap">
-                        <a href="#" class="link-btn-02">
-                            <i></i>
-                            <span>견적보기</span>
-                        </a>
+                        <div class="divider"></div>
+                        <div class="first-btm">
+                            <ul class="info-list">
+                                <li class="car-price">
+                                    <div class="car-tit">차량가격</div>
+                                    <div class="car-txt"><em>49,678,793</em>원</div>
+                                </li>
+                                <li class="car-use-time">
+                                    <div class="car-tit">이용기간</div>
+                                    <div class="car-txt"><em>48</em>개월</div>
+                                </li>
+                                <li class="car-km">
+                                    <div class="car-tit">주행거리</div>
+                                    <div class="car-txt"><em>14,904,000</em>원</div>
+                                </li>
+                                <li class="car-worth">
+                                    <div class="car-tit">잔존가치</div>
+                                    <div class="car-txt"><em>14,904,000</em>원</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="btm-btn">
+                            <button type="button">
+                                <i></i>
+                                <span>나만의 맞춤 견적 보기</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="btn-wrap-column">
@@ -143,84 +170,28 @@
                         <span style="color:#fff;">우리WON카 운용리스 신청</span>
                     </a>
                     <a href="#" class="link-btn-solid-02" style="background-color:rgba(241, 243, 245, 1);">
-                        <span style="color:rgba(7, 15, 22, 0.82);">ARS 상담하기</span>
+                        <span style="color:rgba(12, 23, 35, 0.6);">ARS 상담하기</span>
                     </a>
                 </div>
             </div>
             <!-- [end]차량찾기 결과 -->
-
-            <!-- [start]대출상품안내 -->
-            <div class="page bg-wrap-chat" id="loanSearch01">
-                <div class="lottie-bg" data-bg-json="bgMoving02" id="bgMoving02">
-                    <lottie-player src="./../images/bg/bg_moving_2.json" autoplay loop></lottie-player>
-                </div>
-                <div class="page-content">
-                    <div class="header">
-                        <div class="header-wrap">
-                            <div class="header-left">
-                                <div class="animates-star animates-star-lottie"></div>
-                                <h1 style="font:600 1.7rem/1.4 'Pretendard Variable';">우리와 대화중</h1>
-                            </div>
-                            <div class="header-right">
-                                <button type="button" class="close-btn-prime"></button> 
-                            </div>
-                        </div>
+        </div>
+        <div class="full-modal" id="bridgePage">
+            <div class="modal-content">
+                <button type="button" class="close-modal"></button>
+                <div class="modal-prd">
+                    <div class="img-cont">
+                        <img src="" alt="" class="modal-prd-img">
                     </div>
-                    <div class="content">
-                        <div class="chat-wrap">
-                            <div class="chat-content">
-                                <div class="chat-date-wrap">
-                                    <h2><span class="chat-year">2026</span>.<span class="chat-month">4</span>.<span class="chat-date">16</span></h2>
-                                </div>
-                                <ul class="chat-list" data-animate-cout="3">
-                                    <li class="user-msg">
-                                        <div class="bubble">
-                                            <span>나에게 딱맞는 금융상품 추천</span>
-                                        </div>
-                                    </li>
-                                    <li class="ai-msg">
-                                        <div class="bubble">
-                                            <span>대출상품을 찾고있으시군요!<br>관심있는 상품을 선택하시면 상세한 상품을 찾아드릴게요.</span>
-                                        </div>
-                                    </li>
-                                    
-                                    <li class="ai-msg prd-options">
-                                        <p><i class="icon-prd-list"></i>관심있는 상품을 선택해주세요.</p>
-                                        <ul class="info-list">
-                                            <li class="info-btn">
-                                                <div class="rd-wrap">
-                                                    <input type="radio" name="prd1">
-                                                    <span>개인 대출</span>
-                                                </div>
-                                            </li>
-                                            <li class="info-btn">
-                                                <div class="rd-wrap">
-                                                    <input type="radio" name="prd1">
-                                                    <span>자동차 대출</span>
-                                                </div>
-                                            </li>
-                                            <li class="info-btn">
-                                                <div class="rd-wrap">
-                                                    <input type="radio" name="prd1">
-                                                    <span>기업 대출</span>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="user-input-wrap">
-                                <div class="chat-input-wrap">
-                                    <input type="text" name="input01" placeholder="AI 에게 물어보세요.">
-                                    <button type="button"></button>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="prd-txt-wrap">
+                        <p class="prd-txt01"></p>
+                        <p class="prd-txt02"></p>
+                        <p class="prd-txt03"></p>
                     </div>
-                    <div class="footer"></div>
+                    <ul class="tag-wrap"></ul>
+                    <button type="button" class="to-gyeonjuk"><span>슬쩍 견적보기</span></button>
                 </div>
             </div>
-            <!-- [end]대출상품안내 -->
         </div>
     </div>
 </body>

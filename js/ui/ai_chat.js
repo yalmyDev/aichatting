@@ -86,18 +86,18 @@ $(document).ready(function() {
                     <li class="prd-option">
                         <input type="radio" name="prd01">
                         <div class="prd-card">
-                            <img src="./../images/prd/volvo.png" alt="">
+                            <img src="./../images/prd/teslamodel3.png" alt="">
                             <div class="txt-wrap">
-                                <span class="txt1">북유럽감성, 럭셔리 수입SUV</span>
-                                <span class="txt2">볼보 XC90</span>
-                                <span class="txt3">1억 1,000만원</span>
+                                <span class="txt1">흘륭한 가속력, 긴 주행 가능 거리</span>
+                                <span class="txt2">테슬라 model 3</span>
+                                <span class="txt3">5,000만원</span>
                             </div>
                         </div>
                     </li>
                 </ul>
             </li>`;
         var choicemsg = `
-            <li class="ai-msg appended">
+            <li class="ai-msg">
                 <div class="bubble"><span>당신의 마음에 드는 차를 하나만 선택해보세요.</span></div>
             </li>`;
         var refreshMsg = `
@@ -132,14 +132,17 @@ $(document).ready(function() {
         "현대 팰리세이드": {
             price: "45,000,000원",
             desc:  "준대형 SUV로 차박, 큰짐 운반에 최적화된 현대 팰리세이드와 함께하세요.",
+            comment: "대형 짐과 차박, 가족 여행에 최적인 현대 팰리세이드를 고르셨네요.",
         },
         "기아 쏘렌토": {
             price: "36,000,000원",
             desc:  "중형 SUV로 가족과 함께하는 모든 순간을 위한 기아 쏘렌토와 함께하세요.",
+            comment: "가족 캠핑과 일상 모두에 딱 맞는 기아 쏘렌토를 고르셨네요.",
         },
-        "볼보 XC90": {
-            price: "110,000,000원",
-            desc:  "북유럽 감성과 최고의 안전성을 갖춘 볼보 XC90과 함께하세요.",
+        "테슬라 model3": {
+            price: "50,000,000원",
+            desc:  "흘륭한 가속력, 긴 주행 가능 거리 테슬라 model3와 함께하세요.",
+            comment: "전기차의 정점, 테슬라 model 3를 고르셨네요.",
         },
     };
 
@@ -150,7 +153,7 @@ $(document).ready(function() {
         if ($(this).hasClass("is-selected")) return;
 
         $(".ai-msg.has-prd-btn .prd-option").removeClass("is-selected");
-        $(".ai-msg.has-prd-btn").nextAll().remove();
+        $(".ai-msg.has-prd-btn").nextAll(".appended, .refresh-btn").remove();
 
         $(this).addClass("is-selected");
         $(this).find('input[type="radio"]').prop("checked", true);
@@ -180,7 +183,7 @@ $(document).ready(function() {
         `
         var gotPrdName = `
             <li class="ai-msg reminder appended">
-                <div class="bubble"><span>아주 좋은 선택이에요.<br>대형 짐과 차박, 가족 여행에 최적인 현대 펠리세이드를 고르셨네요.</span></div>
+                <div class="bubble"><span>아주 좋은 선택이에요.<br>${selectedPrd.desc}</span></div>
             </li>`;
         var infoTxt = `
             <li class="ai-msg prd-options">
@@ -226,9 +229,12 @@ $(document).ready(function() {
     // 새로 고침
     // ==========================================
     $(document).on("click", ".ai-msg.refresh-btn button", function() {
-        // refresh-btn 포함 그 이후 appended 메시지 전부 제거
-    $('.chat-list .has-prd-btn').nextAll().remove();
-    $('.chat-list .has-prd-btn').remove();
+        var $refreshBtn = $(this).closest('.ai-msg.refresh-btn');
+        var $prdBtn = $('.chat-list .has-prd-btn');
+
+        $prdBtn.nextAll().remove();
+        $prdBtn.remove();
+        $refreshBtn.remove();
 
         // prdList 순서 섞기
         var items = [
@@ -268,14 +274,14 @@ $(document).ready(function() {
         ];
 
         // 순서 섞기
-        items.sort(function() { return Math.random() - 0.5; });
+        // items.sort(function() { return Math.random() - 0.5; });
 
         var newPrdList = `
             <li class="ai-msg has-prd-btn appended">
                 <ul class="prd-list">${items.join('')}</ul>
             </li>`;
         var choicemsg = `
-            <li class="ai-msg appended">
+            <li class="ai-msg">
                 <div class="bubble"><span>당신의 마음에 드는 차를 하나만 선택해보세요.</span></div>
             </li>`;
         var newRefreshMsg = `
@@ -286,10 +292,19 @@ $(document).ready(function() {
                 </button>
             </li>`;
 
-        appendAiMsg(newPrdList, 0)
-            .then(function() { return appendAiMsg(choicemsg, 300); })
-            .then(function() { return appendAiMsg(newRefreshMsg, 300); })
-            .then(function() { scrollToLastMsg(); });
+        appendLoadingMsg()
+            .then(function(){
+                return new Promise(function(resolve){
+                    setTimeout(function(){
+                        removeLoadingMsg();
+                        resolve();
+                    }, 1000);
+                });
+            })
+            .then(function(){return appendAiMsg(newPrdList, 0);})
+            .then(function(){return appendAiMsg(choicemsg, 300);})
+            .then(function(){return appendAiMsg(newRefreshMsg, 300);})
+            .then(function(){return scrollToLastMsg();})
     });
 
     // ==========================================
@@ -348,5 +363,4 @@ $(document).ready(function() {
             .then(function() { return appendAiMsg(loanInfoMsg, 300); })
             .then(function() { scrollToLastMsg(); });
     });
-
 });

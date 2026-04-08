@@ -74,8 +74,4 @@ $(document).ready(function () {
         );
 
     // [end]gsap library 활용 애니메이션
-
-    // [start]화면 전환 애니메이션
-    $();
-    // [end]화면 전환 애니메이션
 });

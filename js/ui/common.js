@@ -171,12 +171,35 @@ function goPage(targetId) {
 // close 버튼 - 현재 페이지 오른쪽으로, chatMain 왼쪽에서 진입
 function goBackToMain() {
     let $current = $('#' + currentPage);
-    let $main    = $('#chatMain');
 
-    $main.show(); // 추가
+    // chatMain에서 닫기 -> gate로
+    if(currentPage === 'chatMain'){
+        gsap.set("#gate",{x:"-100%"});
+        $("#gate").show();
+        gsap.to($current,{
+            duration:0.4,
+            x:"100%",
+            ease:"power2.inOut",
+            onComplete:function(){
+                $current.hide();
+                gsap.set($current,{x:"0%"});
+            }
+        });
+        gsap.to("#gate",{
+            duration:0.4,
+            x:"0%",
+            ease:"power2.inOut"
+        });
 
+        currentPage = "gate";
+        return;
+    }
+
+    let $main = $('#chatMain');
+
+    $main.show();
     gsap.set(".step01, .step02", { height: "auto", opacity: 1, overflow: "visible" });
-    gsap.set(".step03, .step04, .step05", { opacity: 1, clipPath: "none" });
+    gsap.set(".step04, .step05", { opacity: 1, clipPath: "none" });
 
     gsap.to($current, {
         duration: 0.4,
@@ -207,21 +230,22 @@ function onPageEnter(pageId){
                 $("#carResearch02 .desc01").text(selectedPrd.name);
                 $("#carResearch02 .desc02").text(selectedPrd.price);
                 $("#carResearch02 .desc03").html(selectedPrd.desc);
-                $("#carResearch02 .prd-list-wrap .prd-img img").attr("src", selectedPrd.img);
+                $("#carResearch02 .prd-list-wrap .prd-img img").attr("src", selectedPrd.img).show();
             }
             break;
     }
 }
 function initMainAnimation() {
     gsap.set("#chatMain .step01, #chatMain .step02", { height: 0, opacity: 0, overflow: "hidden" });
-    gsap.set("#chatMain .step03, #chatMain .step04, #chatMain .step05", { opacity: 0 });
+    // gsap.set("#chatMain .step03, #chatMain .step04, #chatMain .step05", { opacity: 0 });
+    gsap.set("#chatMain .step04, #chatMain .step05", { opacity: 0 });
     
     let tl = gsap.timeline({ delay: 0.3 });
     tl.to("#chatMain .step01", { duration: 0.2, height: "auto", ease: "none" })
       .to("#chatMain .step01", { duration: 0.8, opacity: 1, ease: "none" })
       .to("#chatMain .step02", { duration: 0.2, height: "auto", ease: "none" }, "+=0.3")
       .to("#chatMain .step02", { duration: 0.8, opacity: 1, ease: "none" })
-      .to("#chatMain .step03", { duration: 0.8, opacity: 1, ease: "none" }, "+=0.3")
+    //   .to("#chatMain .step03", { duration: 0.8, opacity: 1, ease: "none" }, "+=0.3")
       .to("#chatMain .step04", { duration: 0.8, opacity: 1, clipPath: "inset(0 0 0% 0)", ease: "none" }, "+=0.3")
       .to("#chatMain .step05", { duration: 0.8, opacity: 1, clipPath: "inset(0 0 0% 0)", ease: "none" }, "+=0.3");
 }
@@ -279,20 +303,8 @@ $(document).ready(function () {
         });
     }
     // 요소의 높낮이값 변수로 받아오는 스크립트
-    let inputHeight = $(".user-input-wrap").outerHeight(true);
-    console.log(inputHeight);
-    // ready에서 이렇게 하드코딩
-    // document.documentElement.style.setProperty("--ai-chat-height", "104px"); // 28+8 padding + input 68px
-    // let headerHeight = $(".header").outerHeight(true);
-    // document.documentElement.style.setProperty(
-    //     "--header-height",
-    //     headerHeight + "px",
-    // );
     let footerHeight = $(".footer").outerHeight(true);
-    document.documentElement.style.setProperty(
-        "--footer-height",
-        footerHeight + "px",
-    );
+    document.documentElement.style.setProperty("--footer-height",footerHeight + "px",);
 
     // 화면전환 애니메이션
     $(document).on("click", "a[href]", function (e) {
