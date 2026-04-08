@@ -87,8 +87,7 @@ function loadScenario(scenarioKey){
     // 메시지 렌더링 (gsap 적용 위해 한 번에 DOM에 추가 후 opacity:0 세팅)
     scenario.messages.forEach(function(msg) {
         let html = buildMsgHtml(msg);
-        let $el = $(html).addClass('anim-item'); // 클래스 붙이기
-        $chatList.append($el);
+        $chatList.append(html);
     });
 
     // gsap 초기 opacity 0 세팅
@@ -114,12 +113,9 @@ function loadScenario(scenarioKey){
 
 // 채팅 메세지 어펜드
 function appendAiMsg(html, delay) {
-    return new Promise(function(resolve) {
-        setTimeout(function() {
-            var $newMsg = $(html);
-            $('#' + currentPage + ' .chat-list').append($newMsg);
-            gsap.set($newMsg, { opacity: 0 });
-            gsap.to($newMsg, { opacity: 1, duration: 0.3, ease: 'none' });
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            $(".chat-list").append(html);
             resolve();
         }, delay);
     });
@@ -127,9 +123,19 @@ function appendAiMsg(html, delay) {
 
 // 채팅창 자동 스크롤 스크립트
 function scrollToLastMsg() {
-    var $chatWrap = $('#' + currentPage + ' .chat-wrap');
-    $chatWrap.animate({ scrollTop: $chatWrap[0].scrollHeight - $chatWrap[0].clientHeight + 1000 }, 300);
+    let lastMsg = $('.chat-list li[class*="-msg"]:last-child');
+    let inputHeight = $(".user-input-wrap").outerHeight(true);
+    let scrollTarget =
+        lastMsg.position().top +
+        $(".chat-wrap").scrollTop() -
+        $(".chat-wrap").height() +
+        lastMsg.outerHeight(true) +
+        inputHeight +
+        16;
+
+    $(".chat-wrap").animate({ scrollTop: scrollTarget }, 300);
 }
+
 // gsap 페이지 간 이동 애니메이션
 function onPageEnter(pageId) {
     switch (pageId) {
@@ -143,11 +149,9 @@ function onPageEnter(pageId) {
     }
 }
 
-function goPage(targetId) {
+function goPage(targetId){
     let $current = $('#' + currentPage);
-    let $target = $('#' + targetId);
-
-    $target.show(); // display:none 풀기
+    let $target  = $('#' + targetId);
 
     gsap.to($current, {
         duration: 0.4,
@@ -155,7 +159,6 @@ function goPage(targetId) {
         ease: "power2.inOut",
         onComplete: function() {
             gsap.set($current, { x: "100%" });
-            $current.hide(); // 지나간 페이지 다시 숨기기
         }
     });
     gsap.fromTo($target,
@@ -173,8 +176,7 @@ function goBackToMain() {
     let $current = $('#' + currentPage);
     let $main    = $('#chatMain');
 
-    $main.show(); // 추가
-
+    // chatMain을 완성된 상태로 미리 세팅
     gsap.set(".step01, .step02", { height: "auto", opacity: 1, overflow: "visible" });
     gsap.set(".step03, .step04, .step05", { opacity: 1, clipPath: "none" });
 
@@ -184,12 +186,12 @@ function goBackToMain() {
         ease: "power2.inOut",
         onComplete: function() {
             gsap.set($current, { x: "100%" });
-            $current.hide();
         }
     });
     gsap.fromTo($main,
         { x: "-100%" },
         { duration: 0.4, x: "0%", ease: "power2.inOut" }
+        // onComplete에서 initMainAnimation 호출 안 함
     );
 
     currentPage = "chatMain";
@@ -213,20 +215,20 @@ function onPageEnter(pageId){
     }
 }
 function initMainAnimation() {
-    gsap.set("#chatMain .step01, #chatMain .step02", { height: 0, opacity: 0, overflow: "hidden" });
-    gsap.set("#chatMain .step03, #chatMain .step04, #chatMain .step05", { opacity: 0 });
-    
+    gsap.set(".step01, .step02", { height: 0, opacity: 0, overflow: "hidden" });
     let tl = gsap.timeline({ delay: 0.3 });
-    tl.to("#chatMain .step01", { duration: 0.2, height: "auto", ease: "none" })
-      .to("#chatMain .step01", { duration: 0.8, opacity: 1, ease: "none" })
-      .to("#chatMain .step02", { duration: 0.2, height: "auto", ease: "none" }, "+=0.3")
-      .to("#chatMain .step02", { duration: 0.8, opacity: 1, ease: "none" })
-      .to("#chatMain .step03", { duration: 0.8, opacity: 1, ease: "none" }, "+=0.3")
-      .to("#chatMain .step04", { duration: 0.8, opacity: 1, clipPath: "inset(0 0 0% 0)", ease: "none" }, "+=0.3")
-      .to("#chatMain .step05", { duration: 0.8, opacity: 1, clipPath: "inset(0 0 0% 0)", ease: "none" }, "+=0.3");
+    tl.to(".step01", { duration: 0.2, height: "auto", ease: "none" })
+      .to(".step01", { duration: 0.8, opacity: 1, ease: "none" })
+      .to(".step02", { duration: 0.2, height: "auto", ease: "none" }, "+=0.3")
+      .to(".step02", { duration: 0.8, opacity: 1, ease: "none" })
+      .to(".step03", { duration: 0.8, opacity: 1, ease: "none" }, "+=0.3")
+      .from(".step04", { duration: 0.3, clipPath: "inset(0 0 100% 0)", ease: "none" }, "+=0.3")
+      .from(".step04", { duration: 0.8, opacity: 0, ease: "none" }, "<")
+      .from(".step05", { duration: 0.3, clipPath: "inset(0 0 100% 0)", ease: "none" }, "+=0.3")
+      .from(".step05", { duration: 0.8, opacity: 0, ease: "none" }, "<");
 }
-function initChatAnimation() {
-    let $items = $("#chatPage .chat-list > li.anim-item"); // anim-item만 잡기
+function initChatAnimation(pageId) {
+    let $items = $("#chatPage .chat-list > li");
     let durations = [0.3, 0.3, 0.6, 0.9, 1.2, 1.5];
     let tl = gsap.timeline();
 
@@ -238,34 +240,12 @@ function initChatAnimation() {
 }
 
 $(document).ready(function () {
-    gsap.set('.page:not(#gate):not(#chatMain)', { x: '100%' }); // chatMain 제외
-    gsap.set('#chatMain', { opacity: 0 }); // chatMain은 opacity 0으로
-    gsap.set('#gate', { x: '0%' });
+    gsap.set('.page:not(#chatMain)', {x:'100%'});
+    initMainAnimation();
     // what's scrolling
     // $('*').on('scroll', function(){
     //     console.log($(this).attr('class') || $(this).prop('tagName'));
     // });
-
-    $('#gate button').on('click', function() {
-        $('#gate').hide();
-        gsap.set("#chatMain .step01, #chatMain .step02", { height: 0, opacity: 0, overflow: "hidden" });
-        gsap.set("#chatMain .step03, #chatMain .step04, #chatMain .step05", { opacity: 0 });
-        $('#chatMain').css({ opacity: 0 }).show();
-
-        // show() 후 재계산
-        let headerHeight = $(".header").outerHeight(true);
-        document.documentElement.style.setProperty("--header-height", headerHeight + "px");
-
-        gsap.to('#chatMain', {
-            opacity: 1,
-            duration: 0.6,
-            ease: 'power2.out',
-            onComplete: function() {
-                currentPage = 'chatMain';
-                initMainAnimation();
-            }
-        });
-    });
 
     let chatMainContainer = document.querySelector("#chatMain .lottie-bg");
     if (chatMainContainer) {
@@ -280,14 +260,15 @@ $(document).ready(function () {
     }
     // 요소의 높낮이값 변수로 받아오는 스크립트
     let inputHeight = $(".user-input-wrap").outerHeight(true);
-    console.log(inputHeight);
-    // ready에서 이렇게 하드코딩
-    // document.documentElement.style.setProperty("--ai-chat-height", "104px"); // 28+8 padding + input 68px
-    // let headerHeight = $(".header").outerHeight(true);
-    // document.documentElement.style.setProperty(
-    //     "--header-height",
-    //     headerHeight + "px",
-    // );
+    document.documentElement.style.setProperty(
+        "--ai-chat-height",
+        inputHeight + "px",
+    );
+    let headerHeight = $(".header").outerHeight(true);
+    document.documentElement.style.setProperty(
+        "--header-height",
+        headerHeight + "px",
+    );
     let footerHeight = $(".footer").outerHeight(true);
     document.documentElement.style.setProperty(
         "--footer-height",

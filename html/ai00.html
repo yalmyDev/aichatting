@@ -15,12 +15,21 @@
     <script src="./../js/lib/gsap.min.js"></script>
     <script src="./../js/data/json_container.js"></script>
     <script src="./../js/ui/common.js"></script>
-    <script src="./../js/ui/at_chat.js"></script>
+    <script src="./../js/ui/ai_chat.js"></script>
     <!-- <script src="./../js/ui/chatting_motion.js"></script> -->
 </head>
 <body>
     <div class="bg-presentation">
         <div class="wrap">
+            <!-- [start]진입페이지 -->
+            <div class="page start" id="gate">
+                <img src="./../images/dummy/모바일 채널_우리WON카.png" alt="" style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;">
+                <button type="button" class="open-gate">
+                    <div class="animates-star animates-star-lottie"></div>
+                    <span>내 마음을 읽는 똑똑한 AI의 추천</span>
+                </button>
+            </div>
+            <!-- [end]진입페이지 -->
             <!-- [start]메인페이지 -->
             <div class="page bg-wrap-prime" id="chatMain">
                 <div class="lottie-bg" data-bg-json="bgMoving01" id="bgMoving01"></div>
@@ -45,17 +54,17 @@
                         <p class="desc step03" style="padding:8px 0;font:300 1.5rem/21px 'Pretendard Variable';">지금 바로 확인하고 싶은 키워드를 골라주시면 상세히 안내해 드릴게요.</p>
                         <ul class="ai-menu-list">
                             <li class="btn-full step04">
-                                <a href="./ai02.html">
+                                <a href="./ai02.html" data-scenario="carResearch">
                                     <i class="icon-car"></i>
                                     <span>나에게 꼭 맞는 차량은?</span>
                                 </a>
                             </li>
-                            <li class="btn-full step05">
-                                <a href="./ai03.html">
+                            <!-- <li class="btn-full step05">
+                                <a href="./ai03.html" data-scenario="loanSearch">
                                     <i class="icon-thumb"></i>
                                     <span>나에게 딱맞는 금융상품 추천</span>
                                 </a>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
 
@@ -64,8 +73,10 @@
             <!-- [end]메인페이지 -->
 
             <!-- [start]차량찾기 -->
-            <div class="page bg-wrap-chat" id="carResearch01">
-                <div class="lottie-bg" data-bg-json="bgMoving02" id="bgMoving02"></div>
+            <!-- <div class="page bg-wrap-chat" id="carResearch01"> -->
+            <div class="page bg-wrap-chat" id="chatPage">
+                <!-- <div class="lottie-bg" data-bg-json="bgMoving02" id="bgMoving02"></div> -->
+                <div class="lottie-bg"></div>
                 <div class="page-content">
                     <div class="header">
                         <div class="header-wrap">
@@ -82,25 +93,29 @@
                         <div class="chat-wrap">
                             <div class="chat-content">
                                 <div class="chat-date-wrap">
-                                    <h2><span class="chat-year">2026</span>.<span class="chat-month">4</span>.<span class="chat-date">16</span></h2>
+                                    <h2>
+                                        <!-- <span class="chat-year">2026</span>.<span class="chat-month">4</span>.<span class="chat-date">16</span> -->
+                                        <span class="chat-year"></span>.<span class="chat-month"></span>.<span class="chat-date"></span>
+                                    </h2>
                                 </div>
-                                <ul class="chat-list" data-animate-count="4">
-                                    <li class="user-msg">
+                                <!-- <ul class="chat-list" data-animate-count="4"> -->
+                                <ul class="chat-list">
+                                    <!-- <li class="user-msg">
                                         <div class="bubble">
                                             <span>나에게 꼭 맞는 차량은?</span>
                                         </div>
-                                    </li>
-                                    <li class="ai-msg">
+                                    </li> -->
+                                    <!-- <li class="ai-msg">
                                         <div class="bubble">
                                             <span>좋아요! 5가지 질문에 답해주시면, 꼭 맞는 차량을 찾아 드릴께요!</span>
                                         </div>
-                                    </li>
-                                    <li class="ai-msg">
+                                    </li> -->
+                                    <!-- <li class="ai-msg">
                                         <div class="bubble">
                                             <span>주말엔 주로 어디로 떠나시나요?</span>
                                         </div>
-                                    </li>
-                                    <li class="ai-msg has-choice-btn">
+                                    </li> -->
+                                    <!-- <li class="ai-msg has-choice-btn">
                                         <ul class="options">
                                             <li class="option" id="natureOption">
                                                 <div class="card-wrap">
@@ -121,16 +136,17 @@
                                                 </div>
                                             </li>
                                         </ul>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </div>
                             <div class="user-input-wrap">
-                                <input type="text" name="input01" placeholder="AI 에게 물어보세요.">
-                                <button type="button"></button>
+                                <div class="chat-input-wrap">
+                                    <input type="text" name="input01" placeholder="AI 에게 물어보세요.">
+                                    <button type="button"></button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="footer"></div>
                 </div>
             </div>
             <!-- [end]차량찾기 -->
@@ -140,7 +156,7 @@
                 <div class="header">
                     <div class="header-wrap">
                         <div class="header-left">
-                            <div class="animates-star animates-star-lottie"></div>
+                            <div class="animates-star" id="animatesStar"></div>
                         </div>
                         <h1>우리금융캐피탈</h1>
                         <div class="header-right">
@@ -153,10 +169,9 @@
                     <p style="font:700 1.6rem/1.4 'Pretendard Variable';color:rgba(7, 15, 22, 0.82);text-align:center;">당신의 감성과 라이프스타일에<br>적합한 차량을 찾았어요!</p>
                     <div style="display:block;width:100%;height:24px;"></div>
                     <div class="prd-list-wrap">
-                        <img src="./../images/bg/ellipse_yellow.png" alt="" class="ellipse-bg">
-                        <ul>
+                        <div class="prd-img"><img src="" alt=""></div>
+                        <!-- <ul>
                             <li id="prdTesla">
-                                <div class="prd-img"><img src="./../images/prd/teslamodel3.png" alt=""></div>
                             </li>
                             <li id="prdPalisade">
                                 <div class="prd-img"><img src="./../images/prd/palisade_v2.png" alt=""></div>
@@ -164,21 +179,20 @@
                             <li id="prdKia">
                                 <div class="prd-img"><img src="./../images/prd/kiaEV6.png" alt=""></div>
                             </li>
-                        </ul>
+                        </ul> -->
                     </div>
                     <div class="desc-txt-wrap">
                         <div class="desc-wrap">
-                            <p class="desc01">기아 EV6</p>
+                            <!-- <p class="desc01">기아 EV6</p>
                             <p class="desc02">45,000,000원</p>
-                            <p class="desc03">세련된 디자인과 높은 안전성의<br>기아 EV6와 함께하세요.</p>
+                            <p class="desc03">세련된 디자인과 높은 안전성의<br>기아 EV6와 함께하세요.</p> -->
+                            <p class="desc01"></p>
+                            <p class="desc02"></p>
+                            <p class="desc03"><br></p>
                         </div>
                     </div>
                     <div style="display:block;width:100%;height:32px;"></div>
                     <div class="a-btn-wrap">
-                        <a href="#" class="link-btn-01">
-                            <i></i>
-                            <span>추천차량비교하기</span>
-                        </a>
                         <a href="#" class="link-btn-02">
                             <i></i>
                             <span>견적보기</span>
@@ -186,11 +200,11 @@
                     </div>
                 </div>
                 <div class="btn-wrap-column">
-                    <a href="#" class="link-btn-solid-01">
-                        <span>우리WON카 신차대출 신청</span>
+                    <a href="#" class="link-btn-solid-01" style="background-color:rgba(37, 137, 244, 1);">
+                        <span style="color:#fff;">우리WON카 운용리스 신청</span>
                     </a>
-                    <a href="#" class="link-btn-solid-02">
-                        <span>우리WON카 운용리스 신청</span>
+                    <a href="#" class="link-btn-solid-02" style="background-color:rgba(241, 243, 245, 1);">
+                        <span style="color:rgba(7, 15, 22, 0.82);">ARS 상담하기</span>
                     </a>
                 </div>
             </div>
@@ -257,8 +271,10 @@
                                 </ul>
                             </div>
                             <div class="user-input-wrap">
-                                <input type="text" name="input01" placeholder="AI 에게 물어보세요.">
-                                <button type="button"></button>
+                                <div class="chat-input-wrap">
+                                    <input type="text" name="input01" placeholder="AI 에게 물어보세요.">
+                                    <button type="button"></button>
+                                </div>
                             </div>
                         </div>
                     </div>
