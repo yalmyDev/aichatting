@@ -11,7 +11,6 @@ function appendAiMsg(html, delay) {
 // 채팅창 자동 스크롤 스크립트
 function scrollToLastMsg() {
     let lastMsg = $('.chat-list li[class*="-msg"]:last-child');
-    console.log(lastMsg);
     let inputHeight = $(".user-input-wrap").outerHeight(true);
     let scrollTarget =
         lastMsg.position().top +
@@ -103,7 +102,6 @@ function initChatAnimation(pageId) {
     $items.each(function(index){
         let $item = $(this);
         let d = durations[index] || 0.8;
-        console.log("d :::" ,d);
         let position = (index === 1) ? "+=1.0" : ">";
 
         tl.to($item,{
@@ -141,7 +139,6 @@ $(document).ready(function () {
 
     // 화면전환 애니메이션
     $(document).on("click", "a[href]", function (e) {
-        console.log("what?????");
         let href = $(this).attr("href");
 
         if (!href || href === "#" || href.startsWith("http")) return;
@@ -400,6 +397,7 @@ $(document).ready(function () {
     });
 
     // json 이미지 로딩
+    // header icon
     if ($(".animates-star-lottie").length) {
         $(".animates-star-lottie").each(function(){
             lottie.loadAnimation({
@@ -409,6 +407,49 @@ $(document).ready(function () {
                 autoplay: true,
                 animationData: aiStartJson,
             });
+        });
+    }
+
+    // bg-animation
+    let bgJsonMap = {
+        bgMoving01: bgMoving01,
+        bgMoving02: bgMoving02,
+    };
+
+    if ($('.lottie-bg').length) {
+        $('.lottie-bg').each(function(){
+            let jsonKey = $(this).data("bg-json");
+            let jsonData = bgJsonMap[jsonKey];
+
+            if (jsonData) {
+                const anim = lottie.loadAnimation({
+                    container: this,
+                    renderer: "svg",
+                    loop: true,
+                    autoplay: true,
+                    animationData: jsonData,
+                    rendererSettings: {
+                        preserveAspectRatio: "xMidYMid slice"
+                    }
+                });
+
+                const container = this;
+                anim.addEventListener('DOMLoaded', function() {
+                    const svg = container.querySelector('svg');
+                    if (svg) {
+                        // clip-path 무력화
+                        container.querySelectorAll('[clip-path]').forEach(el => {
+                            el.removeAttribute('clip-path');
+                        });
+                        container.querySelectorAll('clipPath').forEach(el => el.remove());
+
+                        // viewBox 조정
+                        svg.setAttribute('viewBox', '100 -50 300 800');
+                        svg.style.width = '100%';
+                        svg.style.height = '100%';
+                    }
+                });
+            }
         });
     }
 
@@ -445,8 +486,6 @@ $(document).ready(function () {
     let maxHeight = 0;
     $items.each(function () {
         if ($(this).outerHeight(true) > maxHeight) {
-            console.log($(this));
-            console.log($(this).outerHeight());
             maxHeight = $(this).outerHeight(true);
         }
     });
@@ -487,5 +526,33 @@ $(document).ready(function () {
         currentIndex = clickedIndex;
         updateCarousel();
         updateDesc($(this).attr("id"));
+    });
+
+    // 스크롤 감지해서 lottie 위치 보정
+    $('.chat-wrap').on('scroll', function() {
+        let scrollTop = $(this).scrollTop();
+        let $page = $(this).closest('.page');
+        let $lottie = $page.find('.lottie-bg');
+        let $header = $page.find('.header');
+        let headerHeight = $header.outerHeight(true);
+
+
+    console.log('scrollTop:', scrollTop);
+    console.log('lottie:', $(this).closest('.page').find('.lottie-bg').length);
+
+        // page 안에서 chat-wrap이 시작하는 오프셋 계산
+        let chatWrapOffsetTop = $(this).position().top;
+
+        // lottie를 chat-wrap 스크롤 위치 + chat-wrap 시작점 기준으로 이동
+        $lottie.css({
+            'transform': 'translateY(-' + (scrollTop + chatWrapOffsetTop) + 'px)',
+            'top': -chatWrapOffsetTop + 'px'
+        });
+
+        if (scrollTop > 0) {
+            $header.addClass('is-scrolled');
+        } else {
+            $header.removeClass('is-scrolled');
+        }
     });
 });
